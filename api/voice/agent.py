@@ -14,7 +14,9 @@ from app.graph import build_graph
 from app.tools import UserContext
 
 db.init_tables()                                         # make sure the v9 tables exist
-server = AgentServer()
+# Not in the guide: each call starts a new process that loads this whole file (~10 s on this Mac).
+# LiveKit's default limit is 10 s, so calls failed. Give it 60 s.
+server = AgentServer(initialize_process_timeout=60)
 
 # DEMO SHORTCUT (not in the guide): calls from these numbers count as verified, no SMS code.
 # Only safe for testing — caller ID can be faked. In .env: TRUSTED_CALLER_NUMBERS=+15551234567
